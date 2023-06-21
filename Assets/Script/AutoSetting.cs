@@ -12,9 +12,12 @@ namespace AutoSetting
     [Serializable]
     public class AutoSetting
     {
+        public Transform container;
+
         [SerializeField]
         List<SettingOption> options = new List<SettingOption>();
-
+        [SerializeField]
+        List<ASettingConfigUI> configUITemplates = new List<ASettingConfigUI>();
         
 
         public void Init(List<SettingOption> setting)
@@ -30,6 +33,43 @@ namespace AutoSetting
             options.Add(option);
             return option;
         }
+
+
+        public void Render()
+        {
+            foreach(var item in options)
+            {
+                RenderOptions(item);
+            }
+        }
+
+        private void RenderOptions(SettingOption item)
+        { 
+            foreach(var sections in item.List)
+            {
+                RenderSections(sections);
+            }
+        }
+
+        private void RenderSections(SettingSection sections)
+        {
+            foreach(var config in sections.List)
+            {
+                RenderConfig(config);
+            }
+        }
+
+        private void RenderConfig(SettingConfig config)
+        {
+            foreach(var config_template in configUITemplates)
+            {
+                if (config_template.ConfigType != config.ConfigType) continue;
+
+                //TODO: render ui template
+                Transform uiContainer = container;
+                config_template.Render(uiContainer, config);
+            }
+        }
     }
 
     [Serializable]
@@ -44,7 +84,7 @@ namespace AutoSetting
 
             return section;
         }
-
+         
 
     }
 
@@ -65,48 +105,23 @@ namespace AutoSetting
         }
 
         public SettingSection UpdateConfigValue(string config_id, string value)
-        {
-           var config = List.Find(e => e.ConfigID.Equals(config_id));
+        {            
+            var config = List.Find(e => e.ConfigID.Equals(config_id));
 
-            //List.Find(FindConfig);
-
-            config = List.Find(delegate(SettingConfig a)
+            if (config != null)
             {
-                return a.ConfigID.Equals(config_id);
-            });
-
-            //equivalent
-
-            foreach (var e in List)
-            {
-                if (e.ConfigID.Equals(config_id))
-                {
-                    e.Value = value;
-                }
+                config.Value = value;
             }
-
-            //another alternative
-
-            for(int i = 0; i < List.Count; i++)
+            else
             {
-                if (List[i].ConfigID.Equals(config_id))
-                {
-                    List[i].Value = value;
-                }
+                Debug.LogError($"Invalid config id {config_id}");
             }
-
-           if (config != null)
-           {
-               config.Value = value;
-           }else
-           {
-               Debug.LogError($"Invalid config id {config_id}");
-           }
 
             return this;
         }
-         
+
     }    
+
 
     [Serializable]
     public abstract class AGroup<T>
@@ -132,27 +147,23 @@ namespace AutoSetting
         public string GroupId { get => group_id; set => group_id = value; }
     }
 
-    [Serializable]
-    public abstract class ASettingConfigUI
-    {
+    public abstract class ASettingConfigUI : MonoBehaviour, ISettingConfigUI
+    { 
         [SerializeField]
         ConfigType configType;
 
         [SerializeField]
         string renderValue;
 
-        public ConfigType ConfigType 
-        { 
-            get => configType; 
-            set => configType = value; 
-        }
-
-        public void Render(string renderValue)
+        public ConfigType ConfigType
         {
-
+            get => configType;
+            set => configType = value;
         }
-    }
 
+        public abstract void Render(Transform container, SettingConfig config);
+    }
+    
 
     [Serializable]
     public class SettingConfig
