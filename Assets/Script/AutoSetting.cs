@@ -11,18 +11,22 @@ namespace AutoSetting
 
     [Serializable]
     public class AutoSetting
-    {
-        public Transform container;
-
+    {  
         [SerializeField]
         List<SettingOption> options = new List<SettingOption>();
         [SerializeField]
         List<ASettingConfigUI> configUITemplates = new List<ASettingConfigUI>();
-        
 
-        public void Init(List<SettingOption> setting)
+        IAutoSetting isetting;         
+
+        public void Init(IAutoSetting isetting)
         {
+            this.isetting = isetting;
 
+            if(configUITemplates.Count == 0)
+            {
+                Debug.LogError("Unable to load config uis, no template provided");
+            }
         }
 
         public SettingOption AddOption(string group_id, string name)
@@ -38,43 +42,52 @@ namespace AutoSetting
         public void Render()
         {
             foreach(var item in options)
-            {
+            { 
                 RenderOptions(item);
             }
         }
-
+         
         private void RenderOptions(SettingOption item)
-        { 
-            foreach(var sections in item.List)
-            {
-                RenderSections(sections);
-            }
-        }
-
-        private void RenderSections(SettingSection sections)
         {
-            foreach(var config in sections.List)
+            item.subOptionPanel = isetting.OnSubOptionLoadPanel(item);
+            isetting.OnOptionLoadTitle(item);
+            
+            foreach (var sections in item.List)
             {
-                RenderConfig(config);
+                RenderSections(item.subOptionPanel, sections);
             }
         }
 
-        private void RenderConfig(SettingConfig config)
+        private void RenderSections(Transform subOptionPanel, SettingSection section)
+        {
+            isetting.OnOptionLoadSectionTitle(subOptionPanel, section);
+            foreach (var config in section.List)
+            {
+                RenderConfig(subOptionPanel,config);
+            }
+        }
+
+        private void RenderConfig(Transform subOptionPanel, SettingConfig config)
         {
             foreach(var config_template in configUITemplates)
             {
                 if (config_template.ConfigType != config.ConfigType) continue;
-
-                //TODO: render ui template
-                Transform uiContainer = container;
-                config_template.Render(uiContainer, config);
+                config_template.Render(subOptionPanel, config);
             }
         }
+    }
+
+    public interface IAutoSetting
+    {
+        void OnOptionLoadTitle(SettingOption option);
+        void OnOptionLoadSectionTitle(Transform subOptionPanel, SettingSection section);
+        Transform OnSubOptionLoadPanel(SettingOption option);
     }
 
     [Serializable]
     public class SettingOption : AGroup<SettingSection>
     {
+        public Transform subOptionPanel;
         public SettingSection AddSection(string section_id, string section_name)
         {
             var section = new SettingSection();
