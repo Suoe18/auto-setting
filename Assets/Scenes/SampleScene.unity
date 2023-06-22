@@ -221,6 +221,8 @@ MonoBehaviour:
     options: []
     configUITemplates:
     - {fileID: 2740575524461451876, guid: e3cb6d2f30165bf4a8f244f8a03d8217, type: 3}
+    - {fileID: 3647601613625464109, guid: 57eb31db4ac8bf5438e261b322458a55, type: 3}
+    - {fileID: 7764908125416474105, guid: 55889d1d4df81bf4cac23328fd8a9aff, type: 3}
   autoSettingsUI: []
   PrefabTitle: {fileID: 1410958239587620694, guid: 8c1373ddc3fd31b40ac76205e12aabb5, type: 3}
   PrefabSection: {fileID: 1410958239587620694, guid: 8c1373ddc3fd31b40ac76205e12aabb5, type: 3}
