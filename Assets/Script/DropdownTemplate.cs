@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.UIElements;
+using System;
 
 namespace AutoSetting
 {
@@ -12,11 +12,11 @@ namespace AutoSetting
         [SerializeField]
         TMP_Dropdown dropdown;
         [SerializeField]
-        TMP_Text settingConfigText;
+        TMP_Text settingConfigText;        
 
         public override void Render(Transform container, SettingConfig config)
         {
-            List<string> m_DropOptions = new List<string> { };
+            List<string> dropdown_options = new List<string> { };
             GameObject instanceText = Instantiate(settingConfigText.gameObject, container);
             GameObject instance = Instantiate(dropdown.gameObject, container);
 
@@ -27,14 +27,15 @@ namespace AutoSetting
             {
                 foreach (var option in config.Arguments)
                 {
-                    m_DropOptions.Add(option);
+                    dropdown_options.Add(option);
                 }
 
 
-                component.AddOptions(m_DropOptions);
+                component.AddOptions(dropdown_options);
             }
                         
             componentText.text = config.Name;
+         
         }
     }
 }
