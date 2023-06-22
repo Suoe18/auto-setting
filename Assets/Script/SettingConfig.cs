@@ -17,6 +17,7 @@ namespace AutoSetting
         public ConfigType ConfigType { get => configType; set => configType = value; }
         public string Value { get => value; set => this.value = value; }
         public string ConfigID { get; internal set; }
+        public string[] Arguments { get; internal set; }
     }
 }
 

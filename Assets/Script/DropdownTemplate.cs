@@ -23,10 +23,17 @@ namespace AutoSetting
             var component = instance.GetComponent<TMP_Dropdown>();
             var componentText = instanceText.GetComponent<TMP_Text>();
 
-            m_DropOptions.Add(config.Value);
+            if(config.Arguments != null)
+            {
+                foreach (var option in config.Arguments)
+                {
+                    m_DropOptions.Add(option);
+                }
 
-            component.AddOptions(m_DropOptions);
-            
+
+                component.AddOptions(m_DropOptions);
+            }
+                        
             componentText.text = config.Name;
         }
     }

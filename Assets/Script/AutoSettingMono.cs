@@ -23,9 +23,9 @@ namespace AutoSetting
             
 
             option.AddSection("graphics", "Graphics")
-                .AddConfig("1", "Resolution", ConfigType.DROPDOWN, "1200x800")
-                .AddConfig("2", "FPS", ConfigType.DROPDOWN, "60")
-                .AddConfig("3", "VSync", ConfigType.DROPDOWN, "On")
+                .AddConfig("1", "Resolution", ConfigType.DROPDOWN, "", new string[] {"1920x1080", "1080x720"})
+                .AddConfig("2", "FPS", ConfigType.DROPDOWN, "", new string[] {"120 fps", "60 fps", "30 fps"})
+                .AddConfig("3", "VSync", ConfigType.DROPDOWN, "",  new string[] {"On","Off"})
                 .AddConfig("4", "Sensitivity", ConfigType.SLIDER, "0.5");
 
             

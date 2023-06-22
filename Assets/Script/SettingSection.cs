@@ -7,13 +7,14 @@ namespace AutoSetting
     public class SettingSection : AGroup<SettingConfig>
     {
   
-        public SettingSection AddConfig(string config_id, string name, ConfigType configType, string value = "")
+        public SettingSection AddConfig(string config_id, string name, ConfigType configType, string firstvalue = "", string[] arguments = null)
         {
             var config = new SettingConfig();
             config.Name = name;
             config.ConfigType = configType;
-            config.Value = value;
+            config.Value = firstvalue;
             config.ConfigID = config_id;
+            config.Arguments = arguments;
             List.Add(config);
 
             return this;
