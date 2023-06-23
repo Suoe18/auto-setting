@@ -8,38 +8,32 @@ namespace AutoSetting
     public class SliderTemplate : ASettingConfigUI
     {
         [SerializeField]
-        Slider slider;
-
-        [SerializeField]
+        GameObject sliderTemplatePrefab;
+        
+        Slider slider;        
         TMP_Text settingConfigText;
 
         private float lastValue;
-        private string namePlaceholder;
-
-        public event Func<float, float> OnSliderValueChanged;
+        private string namePlaceholder; 
 
         public override void Render(Transform parent, SettingConfig config)
         {
-            GameObject instanceText = Instantiate(settingConfigText.gameObject, parent);
-            GameObject instance = Instantiate(slider.gameObject, parent);
+            GameObject instance = Instantiate(sliderTemplatePrefab.gameObject, parent);
 
-            var component = instance.GetComponent<Slider>();
-            var componentText = instanceText.GetComponent<TMP_Text>();
+            slider = instance.GetComponentInChildren<Slider>();
+            settingConfigText = instance.GetComponentInChildren<TMP_Text>();
 
-            component.value = float.Parse(config.Value);
-            componentText.text = config.Name;
+            slider.value = float.Parse(config.Value);
+            settingConfigText.text = config.Name;
 
-         
-            component.onValueChanged.AddListener(value =>
-            {                
-                float newValue = OnSliderValueChanged?.Invoke(value) ?? value;
-                component.value = newValue;
-
-                lastValue = newValue;
-            });
+            slider.onValueChanged.AddListener(value =>
+            {
+                config.OnValueUpdate?.Invoke("value");  
+            }); 
 
             namePlaceholder = config.Name;
-            lastValue = component.value;
+            lastValue = slider.value;                     
+            
         }
 
         public float GetLastValue()

@@ -8,20 +8,20 @@ using System;
 namespace AutoSetting
 {
     public class DropdownTemplate : ASettingConfigUI
-    {        
+    {
         [SerializeField]
-        TMP_Dropdown dropdown;
-        [SerializeField]
-        TMP_Text settingConfigText;        
+        GameObject dropdownTemplatePrefab;
+        
+        TMP_Dropdown dropdown;        
+        TMP_Text settingConfigText; 
 
         public override void Render(Transform container, SettingConfig config)
-        {
-            List<string> dropdown_options = new List<string> { };
-            GameObject instanceText = Instantiate(settingConfigText.gameObject, container);
-            GameObject instance = Instantiate(dropdown.gameObject, container);
+        {            
+            GameObject instance = Instantiate(dropdownTemplatePrefab.gameObject, container);
 
-            var component = instance.GetComponent<TMP_Dropdown>();
-            var componentText = instanceText.GetComponent<TMP_Text>();
+            List<string> dropdown_options = new List<string> { };
+            dropdown = instance.GetComponentInChildren<TMP_Dropdown>();
+            settingConfigText = instance.GetComponentInChildren<TMP_Text>();           
 
             if(config.Arguments != null)
             {
@@ -31,11 +31,15 @@ namespace AutoSetting
                 }
 
 
-                component.AddOptions(dropdown_options);
+                dropdown.AddOptions(dropdown_options);
             }
-                        
-            componentText.text = config.Name;
-         
+            
+            settingConfigText.text = config.Name;
+
+            dropdown.onValueChanged.AddListener(index =>
+            {
+                config.OnValueUpdate(config.Arguments[index]);
+            });
         }
     }
 }

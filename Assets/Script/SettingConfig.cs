@@ -12,6 +12,8 @@ namespace AutoSetting
         ConfigType configType;
         [SerializeField]
         string value;
+        
+        public Action<object> OnValueUpdate;
 
         public string Name { get => name; set => name = value; }
         public ConfigType ConfigType { get => configType; set => configType = value; }

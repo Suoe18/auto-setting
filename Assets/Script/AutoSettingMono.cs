@@ -17,20 +17,22 @@ namespace AutoSetting
         public GameObject PrefabSubOptionPanel;
 
         private void Awake()
-        {
-            var option1 = setting.AddOption("audio", "Audio");
-            var option = setting.AddOption("graphics", "Graphics");
-            
+        {                        
+            var option= setting.AddOption("graphics", "Graphics");
+
 
             option.AddSection("graphics", "Graphics")
-                .AddConfig("1", "Resolution", ConfigType.DROPDOWN, "", new string[] {"1920x1080", "1080x720"})
-                .AddConfig("2", "FPS", ConfigType.DROPDOWN, "", new string[] {"120 fps", "60 fps", "30 fps"})
-                .AddConfig("3", "VSync", ConfigType.DROPDOWN, "",  new string[] {"On","Off"})
-                .AddConfig("4", "Sensitivity", ConfigType.SLIDER, "0.5");
+                .AddConfig("1", "Resolution", ConfigType.DROPDOWN, "", new string[] { "1920x1080", "1080x720" }, e => {
+                    Debug.Log("value changed" + e);
+                })
+                .AddConfig("2", "FPS", ConfigType.DROPDOWN, "", new string[] { "120 fps", "60 fps", "30 fps" })
+                .AddConfig("3", "VSync", ConfigType.TEXT, "ON")
+                .AddConfig("4", "Sensitivity", ConfigType.SLIDER, "1");
 
-            
+            setting.UpdateConfig("3", "OFF");
+            setting.UpdateSection("graphics", "Video and Resolution");
 
-            setting.Init(this);
+            setting.Init(this);            
         }
 
         private void Start()

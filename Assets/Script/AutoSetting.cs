@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting.FullSerializer;
 using Unity.VisualScripting.FullSerializer.Internal;
 using UnityEngine;
 using static UnityEditor.Progress;
@@ -22,6 +23,7 @@ namespace AutoSetting
         public void Init(IAutoSetting isetting)
         {
             this.isetting = isetting;
+
 
             if(configUITemplates.Count == 0)
             {
@@ -82,8 +84,36 @@ namespace AutoSetting
                 config_template.Render(subOptionPanel, config);
             }
         }
-    }
 
+        public void UpdateConfig(string config_id, string newValue)
+        {
+            foreach (var config in options.SelectMany(option => option.List).SelectMany(section => section.List))
+            {
+                if (config.ConfigID == config_id)
+                {
+                    config.Value = newValue;
+                    return; 
+                }
+            }
+            
+            Debug.LogError("Config with ID " + config_id + " not found.");
+        }
+
+        public void UpdateSection(string group_id, string newName)
+        {
+            foreach(var section in options.SelectMany(section => section.List))
+            {
+                if (section.GroupId == group_id)
+                {
+                    section.Name = newName;
+                    return;
+                }
+            }
+
+            Debug.LogError("Config with ID " + group_id + " not found.");
+        }
+    }
+   
 
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 namespace AutoSetting
 {
@@ -15,9 +16,7 @@ namespace AutoSetting
             List.Add(section);
 
             return section;
-        }
-         
-
+        }        
     }
 }
 

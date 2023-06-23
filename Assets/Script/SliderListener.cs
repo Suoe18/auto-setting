@@ -9,12 +9,12 @@ namespace AutoSetting
 
         private void OnEnable()
         {
-            sliderTemplate.OnSliderValueChanged += ConfigSliderValueChanged;
+            //sliderTemplate.OnSliderValueChanged += ConfigSliderValueChanged;
         }
 
         private void OnDisable()
         {
-            sliderTemplate.OnSliderValueChanged -= ConfigSliderValueChanged;
+            //sliderTemplate.OnSliderValueChanged -= ConfigSliderValueChanged;
         }
 
         private float ConfigSliderValueChanged(float value)
@@ -23,7 +23,7 @@ namespace AutoSetting
             string name = sliderTemplate.GetName();
 
             Debug.Log($"{name} slider value changed from {lastValue} to {value}.");
-                                    
+
             float modifiedValue = value;
                         
             return modifiedValue;

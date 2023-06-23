@@ -9,22 +9,32 @@ namespace AutoSetting
     public class TextTemplate : ASettingConfigUI
     {
         [SerializeField]
-        TMP_Text textTemplate;        
-        [SerializeField]
+        GameObject textTemplatePrefab;
+
+        TMP_Text nameTextUI;                
         TMP_Text valueTextUI;
 
         public override void Render(Transform container, SettingConfig config)
         {
            
-            GameObject textInstance = Instantiate(textTemplate.gameObject, container);
-            GameObject valueTextInstance = Instantiate(valueTextUI.gameObject, container);
+            GameObject instance = Instantiate(textTemplatePrefab.gameObject, container);
 
-            var textComponent = textInstance.GetComponent<TMP_Text>();
-            var valueComponent = valueTextInstance.GetComponent<TMP_Text>();
+            TMP_Text[] textComponents = instance.GetComponentsInChildren<TMP_Text>();
+            foreach (TMP_Text textComponent in textComponents)
+            {
+                if (textComponent.gameObject.name.Equals("Name"))
+                {
+                    nameTextUI = textComponent;
+                }
+                else if (textComponent.gameObject.name.Equals("Value"))
+                {
+                    valueTextUI = textComponent;
+                }
+            }
 
-
-            textComponent.text = config.Name;
-            valueComponent.text = config.Value;
+            // Set the text values
+            nameTextUI.text = config.Name;
+            valueTextUI.text = config.Value;
         }
     
     }
