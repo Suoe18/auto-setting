@@ -23,28 +23,19 @@ namespace AutoSetting
             slider = instance.GetComponentInChildren<Slider>();
             settingConfigText = instance.GetComponentInChildren<TMP_Text>();
 
-            slider.value = float.Parse(config.Value);
+            slider.value = float.Parse(config.Value.ToString());
             settingConfigText.text = config.Name;
 
             slider.onValueChanged.AddListener(value =>
             {
                 config.OnValueUpdate?.Invoke("value");  
-            }); 
+            });
 
-            namePlaceholder = config.Name;
-            lastValue = slider.value;                     
-            
+
+            config.OnGetValue += () => config.Value;
         }
 
-        public float GetLastValue()
-        {
-            return lastValue;
-        }
-
-        public string GetName()
-        {
-            return namePlaceholder;
-        }
+      
     }
 }
 

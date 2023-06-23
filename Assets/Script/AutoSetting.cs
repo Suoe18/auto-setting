@@ -18,7 +18,9 @@ namespace AutoSetting
         [SerializeField]
         List<ASettingConfigUI> configUITemplates = new List<ASettingConfigUI>();
 
-        IAutoSetting isetting;         
+        IAutoSetting isetting;
+
+        bool HasRendered { get; set; }
 
         public void Init(IAutoSetting isetting)
         {
@@ -50,7 +52,8 @@ namespace AutoSetting
 
         public void Render()
         {
-            foreach(var item in options)
+            HasRendered = true;
+            foreach (var item in options)
             { 
                 RenderOptions(item);
             }
@@ -111,6 +114,47 @@ namespace AutoSetting
             }
 
             Debug.LogError("Config with ID " + group_id + " not found.");
+        }
+
+        public T GetConfigValue<T>(string config_id)
+        {
+            if (!HasRendered) throw new Exception("AutoSettings is yet to be rendered. Please ensure you have rendered the object.");
+            var config = options.SelectMany(option => option.List)
+                .SelectMany(section => section.List)
+                .Where(e => e.ConfigID == config_id).FirstOrDefault();
+
+            if (config == null)
+            {
+                Debug.LogError($"Config ID: {config_id} does not exist in the list, please ensure your id exists.");
+            }
+
+            try
+            {
+                return (T)config?.OnGetValue();
+            }catch(InvalidCastException ex)
+            {
+                Debug.LogError($"unable to cast config value of `{config.Value}` type of {typeof(T)}" + ex);
+            }
+            
+
+            return default;
+        } 
+
+        public Transform GetSubOptionByGroupID(string group_id)
+        {
+            Transform id = options.Find(e => e.GroupId == group_id).subOptionPanel;
+
+
+            if(id != null)
+            {
+                Debug.Log("Group ID: " + group_id);
+            }
+            else
+            {
+                Debug.LogError("Group ID: " + group_id + " not found.");
+            }
+
+            return id;
         }
     }
    

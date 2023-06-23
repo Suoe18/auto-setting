@@ -19,10 +19,10 @@ namespace AutoSetting
 
         private float ConfigSliderValueChanged(float value)
         {
-            float lastValue = sliderTemplate.GetLastValue();
-            string name = sliderTemplate.GetName();
+            //float lastValue = sliderTemplate.GetLastValue();
+            //string name = sliderTemplate.GetName();
 
-            Debug.Log($"{name} slider value changed from {lastValue} to {value}.");
+            //Debug.Log($"{name} slider value changed from {lastValue} to {value}.");
 
             float modifiedValue = value;
                         

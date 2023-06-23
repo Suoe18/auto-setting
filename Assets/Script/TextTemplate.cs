@@ -32,9 +32,11 @@ namespace AutoSetting
                 }
             }
 
+            config.OnGetValue += () => config.Value.ToString();
+
             // Set the text values
             nameTextUI.text = config.Name;
-            valueTextUI.text = config.Value;
+            valueTextUI.text = config.Value.ToString();
         }
     
     }

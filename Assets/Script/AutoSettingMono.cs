@@ -2,6 +2,7 @@
 using UnityEngine;
 using TMPro;
 using static System.Collections.Specialized.BitVector32;
+using System;
 
 namespace AutoSetting
 {
@@ -32,12 +33,20 @@ namespace AutoSetting
             setting.UpdateConfig("3", "OFF");
             setting.UpdateSection("graphics", "Video and Resolution");
 
-            setting.Init(this);            
+            setting.Init(this);
+
+
+            
         }
 
         private void Start()
         {
             setting.Render();
+
+            Debug.Log("boom panes: " + setting.GetConfigValue<string>("3"));
+            Debug.Log("boom panes: " + setting.GetConfigValue<string>("1"));
+            Debug.Log("boom panes: " + setting.GetConfigValue<string>("4"));
+            setting.GetSubOptionByGroupID("graphics");
         }
 
         public void OnOptionLoadSectionTitle(Transform subOptionPanel, SettingSection section)

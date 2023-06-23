@@ -40,7 +40,11 @@ namespace AutoSetting
             {
                 config.OnValueUpdate(config.Arguments[index]);
             });
+
+            config.OnGetValue += () => config.Arguments[dropdown.value];
         }
+
+        
     }
 }
 

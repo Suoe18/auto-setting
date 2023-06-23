@@ -5,7 +5,8 @@ namespace AutoSetting
 {
     [Serializable]
     public class SettingSection : AGroup<SettingConfig>
-    {  
+    {
+  
         public SettingSection AddConfig(string config_id, string name, ConfigType configType, string firstvalue = "", string[] arguments = null, Action<object> on_value_update = null)
         {
             var config = new SettingConfig();
@@ -18,7 +19,12 @@ namespace AutoSetting
             List.Add(config);
 
             return this;
-        }       
+        }
+
+        public object OnGetSuboptionID()
+        {
+            throw new NotImplementedException();
+        }
     }    
 }
 
