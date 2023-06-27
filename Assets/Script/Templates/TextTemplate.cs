@@ -8,16 +8,24 @@ namespace AutoSetting
 {
     public class TextTemplate : ASettingConfigUI
     {
+      
         [SerializeField]
-        GameObject textTemplatePrefab;
-
-        TMP_Text nameTextUI;                
+        TMP_Text nameTextUI;
+        [SerializeField]
         TMP_Text valueTextUI;
 
         public override ASettingConfigUI Render(Transform container, SettingConfig config)
         {
 
-            //GameObject instance = Instantiate(textTemplatePrefab.gameObject, container);
+            GameObject instance = Instantiate(gameObject, container);
+            var component = instance.GetComponent<TextTemplate>();
+
+            config.OnSetValue += value => component.valueTextUI.text = value.ToString();
+            config.OnGetValue += () => component.valueTextUI.text;
+
+            component.nameTextUI.text = config.Name;
+            component.valueTextUI.text = config.Value.ToString();
+
 
             //TMP_Text[] textComponents = instance.GetComponentsInChildren<TMP_Text>();
             //foreach (TMP_Text textComponent in textComponents)
@@ -38,7 +46,7 @@ namespace AutoSetting
             //nameTextUI.text = config.Name;
             //valueTextUI.text = config.Value.ToString();
 
-            return null;
+            return component;
         }
     
     }

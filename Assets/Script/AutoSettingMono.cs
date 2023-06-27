@@ -37,8 +37,9 @@ namespace AutoSetting
                     Debug.Log("fps value changed" + e);
                     //saving
                 }) 
-                .AddConfig("4", "Sensitivity", ConfigType.SLIDER, "1");
-             
+                .AddConfig("4", "Sensitivity", ConfigType.SLIDER, "1")
+                .AddConfig("5", "VSYNC", ConfigType.TEXT, "ON");
+
             setting.UpdateSection("graphics", "Video and Resolution");
 
 
@@ -57,6 +58,7 @@ namespace AutoSetting
             setting.UpdateConfig("2", "1");
             setting.UpdateConfig("6", "1");
             setting.UpdateConfig("4", "0.5");
+            setting.UpdateConfig("5", "OFF");
             Debug.Log($"after modification: {setting.GetConfigValue<string>("1")}");
         }
 

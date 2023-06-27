@@ -322,5 +322,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   configType: 2
-  renderValue: 
-  textTemplatePrefab: {fileID: 6485509966497685420}
+  nameTextUI: {fileID: 6485509964721811754}
+  valueTextUI: {fileID: 6485509965819727491}
