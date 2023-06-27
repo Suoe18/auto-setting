@@ -581,8 +581,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   configType: 0
-  renderValue: 
-  sliderTemplatePrefab: {fileID: 7820544760777645439}
+  slider: {fileID: 7820544759588187212}
+  settingConfigText: {fileID: 7820544759240570720}
 --- !u!114 &5414726524244335109
 MonoBehaviour:
   m_ObjectHideFlags: 0

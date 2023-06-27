@@ -717,8 +717,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   configType: 1
-  renderValue: 
-  dropdownTemplatePrefab: {fileID: 2801351807495796021}
+  dropdown: {fileID: 5161953117993462146}
+  settingConfigText: {fileID: 3802969524776123172}
 --- !u!1 &2818642870804119266
 GameObject:
   m_ObjectHideFlags: 0

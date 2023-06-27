@@ -15,7 +15,7 @@ namespace AutoSetting
             config.Value = firstvalue;
             config.ConfigID = config_id;
             config.Arguments = arguments;
-            config.OnValueUpdate = on_value_update;
+            config.OnUpdateValue = on_value_update;
             List.Add(config);
 
             return this;

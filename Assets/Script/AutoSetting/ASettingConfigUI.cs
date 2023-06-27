@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace AutoSetting
 {
@@ -6,17 +7,13 @@ namespace AutoSetting
     { 
         [SerializeField]
         ConfigType configType;
-
-        [SerializeField]
-        string renderValue;
-
+         
         public ConfigType ConfigType
         {
             get => configType;
             set => configType = value;
-        }
-
-        public abstract void Render(Transform container, SettingConfig config);
+        }  
+        public abstract ASettingConfigUI Render(Transform container, SettingConfig config);
     }
 }
 

@@ -31,9 +31,7 @@ namespace AutoSetting
             {
                 Debug.LogError("Unable to load config uis, no template provided");
             }
-
-
-            //Baysik
+             
             if(configUITemplates.GroupBy(x => x.ConfigType).Count() != configUITemplates.Count())
             {
                 Debug.LogError("Duplicate config_type in Config UI Templates. Please ensure you only have one type for each template");
@@ -90,14 +88,21 @@ namespace AutoSetting
 
         public void UpdateConfig(string config_id, string newValue)
         {
-            foreach (var config in options.SelectMany(option => option.List).SelectMany(section => section.List))
+            foreach(var option in options)
             {
-                if (config.ConfigID == config_id)
+                foreach(var section in option.List)
                 {
-                    config.Value = newValue;
-                    return; 
+                    foreach(var config in section.List)
+                    {
+                        if (config.ConfigID.Equals(config_id))
+                        {
+                            config.Value = newValue;
+                            config.ReflectChanges();
+                            return;
+                        }
+                    }
                 }
-            }
+            } 
             
             Debug.LogError("Config with ID " + config_id + " not found.");
         }
