@@ -12,41 +12,46 @@ namespace AutoSetting
         public Transform containerSubOptionGroup;
 
         public AutoSetting setting;
-        public List<GameObject> autoSettingsUI = new List<GameObject>();
+       // public List<GameObject> autoSettingsUI = new List<GameObject>();
         public GameObject PrefabTitle;
         public GameObject PrefabSection;
         public GameObject PrefabSubOptionPanel;
 
         private void Awake()
         {
-            var option = setting.AddOption("graphics", "Graphics");
+            AddGeneralSettingConfig();
+            var controlOption = setting.AddOption("Control", "CONTROL");
+            
 
 
-            option.AddSection("graphics", "Graphics")
-                .AddConfig("1", "Resolution", ConfigType.DROPDOWN, "", new string[] { "1920x1080", "1080x720" }, e =>
-                {
-                    Debug.Log("resolution value changed" + e);
-                })
-                .AddConfig("2", "FPS", ConfigType.DROPDOWN, "", new string[] { "120 fps", "60 fps", "30 fps" }, e =>
-                {
-                    Debug.Log("fps value changed" + e);
-                    //saving
-                })
-                .AddConfig("6", "FPS", ConfigType.DROPDOWN, "", new string[] { "120 fps", "22360 fps", "30 fps" }, e =>
-                {
-                    Debug.Log("fps value changed" + e);
-                    //saving
-                }) 
-                .AddConfig("4", "Sensitivity", ConfigType.SLIDER, "1")
-                .AddConfig("5", "VSYNC", ConfigType.TEXT, "ON");
-
-            setting.UpdateSection("graphics", "Video and Resolution");
 
 
             setting.Init(this);
 
 
+        }
+        private void AddGeneralSettingConfig()
+        {
+            var generalOption = setting.AddOption("General", "GENERAL");
+            generalOption.AddSection("General", "GENERAL")
+               .AddConfig("1", "Resolution", ConfigType.DROPDOWN, "", new string[] { "1920x1080", "1080x720" }, e =>
+               {
+                   Debug.Log("resolution value changed" + e);
+               })
+               .AddConfig("2", "FPS", ConfigType.DROPDOWN, "", new string[] { "120 fps", "60 fps", "30 fps" }, e =>
+               {
+                   Debug.Log("fps value changed" + e);
+                   //saving
+               })
+               .AddConfig("6", "FPS", ConfigType.DROPDOWN, "", new string[] { "120 fps", "22360 fps", "30 fps" }, e =>
+               {
+                   Debug.Log("fps value changed" + e);
+                   //saving
+               })
+               .AddConfig("4", "Sensitivity", ConfigType.SLIDER, "1")
+               .AddConfig("5", "VSYNC", ConfigType.TEXT, "ON");
 
+            setting.UpdateSection("General", "GENERAL SETTING");
         }
 
         private void Start()

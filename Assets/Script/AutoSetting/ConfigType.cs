@@ -4,6 +4,8 @@
     {
         SLIDER,
         DROPDOWN,
+        BUTTON,
+        TOGGEL,
         TEXT
     }
 }
