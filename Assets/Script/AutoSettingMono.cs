@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using static System.Collections.Specialized.BitVector32;
 using System;
+using UnityEngine.UI;
 
 namespace AutoSetting
 {
@@ -76,9 +77,9 @@ namespace AutoSetting
         public void OnOptionLoadTitle(SettingOption option)
         {
             var instance = Instantiate(PrefabTitle, containerOption);
-            instance.GetComponent<TMP_Text>().text = option.Name;
+            instance.GetComponentInChildren<TMP_Text>().text = option.Name;
         }
-
+     
         public Transform OnSubOptionLoadPanel(SettingOption option)
         {
             var instance = Instantiate(PrefabSubOptionPanel, containerSubOptionGroup);
@@ -86,8 +87,7 @@ namespace AutoSetting
             return instance.transform;
         }
 
-
-
+        
     }
 }
 

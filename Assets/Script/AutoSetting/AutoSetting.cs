@@ -67,6 +67,7 @@ namespace AutoSetting
                 RenderSections(item.subOptionPanel, sections);
             }
         }
+       
 
         private void RenderSections(Transform subOptionPanel, SettingSection section)
         {
@@ -83,6 +84,24 @@ namespace AutoSetting
             {
                 if (config_template.ConfigType != config.ConfigType) continue;
                 config_template.Render(subOptionPanel, config);
+            }
+        }
+        public void ShowConfigPanel(string config_id, GameObject subOptionPanel)
+        {
+            foreach (var option in options)
+            {
+                foreach (var section in option.List)
+                {
+                    foreach (var config in section.List)
+                    {
+                        if (config.ConfigID.Equals(config_id))
+                        {
+                            subOptionPanel.SetActive(true);
+                           
+                            return;
+                        }
+                    }
+                }
             }
         }
 
