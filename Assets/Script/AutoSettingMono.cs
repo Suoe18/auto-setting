@@ -22,14 +22,8 @@ namespace AutoSetting
         {
             AddGeneralSettingConfig();
             var controlOption = setting.AddOption("Control", "CONTROL");
-            
-
-
-
 
             setting.Init(this);
-
-
         }
         private void AddGeneralSettingConfig()
         {
