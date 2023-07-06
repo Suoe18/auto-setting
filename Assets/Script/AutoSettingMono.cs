@@ -35,22 +35,19 @@ namespace AutoSetting
         {
             var generalOption = setting.AddOption("General", "GENERAL");
             generalOption.AddSection("General", "GENERAL")
-               .AddConfig("1", "Resolution", ConfigType.DROPDOWN, "", new string[] { "1920x1080", "1080x720" }, e =>
+               .AddConfig("1", "Graphic Quality", ConfigType.DROPDOWN, "", new string[] { "Ultra", "High", "Medium", "Low" }, e =>
                {
-                   Debug.Log("resolution value changed" + e);
+                   Debug.Log("resolution value changed: " + e);
                })
-               .AddConfig("2", "FPS", ConfigType.DROPDOWN, "", new string[] { "120 fps", "60 fps", "30 fps" }, e =>
-               {
-                   Debug.Log("fps value changed" + e);
-                   //saving
-               })
-               .AddConfig("6", "FPS", ConfigType.DROPDOWN, "", new string[] { "120 fps", "22360 fps", "30 fps" }, e =>
+               .AddConfig("2", "Frame Rate", ConfigType.DROPDOWN, "", new string[] { "60", "30", "15" }, e =>
                {
                    Debug.Log("fps value changed" + e);
                    //saving
                })
-               .AddConfig("4", "Sensitivity", ConfigType.SLIDER, "1")
-               .AddConfig("5", "VSYNC", ConfigType.TEXT, "ON");
+               .AddConfig("4", "Master Volume", ConfigType.SLIDER, "1")
+               .AddConfig("5", "Sound FX Volume", ConfigType.SLIDER, "1")
+               .AddConfig("6", "Music Volume", ConfigType.SLIDER, "1")
+               .AddConfig("7", "VSYNC", ConfigType.TEXT, "ON");
 
             setting.UpdateSection("General", "GENERAL SETTING");
         }
@@ -62,9 +59,8 @@ namespace AutoSetting
             Debug.Log("initial: " + setting.GetConfigValue<string>("1"));
             setting.UpdateConfig("1", "1");
             setting.UpdateConfig("2", "1");
-            setting.UpdateConfig("6", "1");
-            setting.UpdateConfig("4", "0.5");
-            setting.UpdateConfig("5", "OFF");
+           
+            
             Debug.Log($"after modification: {setting.GetConfigValue<string>("1")}");
         }
 
