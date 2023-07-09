@@ -13,17 +13,33 @@ namespace AutoSetting
         public Transform containerSubOptionGroup;
 
         public AutoSetting setting;
-       // public List<GameObject> autoSettingsUI = new List<GameObject>();
+        public TabSystem tabSystem;
         public GameObject PrefabTitle;
         public GameObject PrefabSection;
         public GameObject PrefabSubOptionPanel;
 
+
+        private void Onclintry()
+        {
+
+            for (int i = 0; i < tabSystem.tabButtons.Count; i++)
+            {
+                int index = i; // Capture the value of 'i' for the lambda expression
+                tabSystem.tabButtons[i].onClick.AddListener(() => tabSystem.OnClick(index));
+                tabSystem.tabButtons[i].onClick.AddListener(tabSystem.LogShow);
+            }
+
+
+
+        }
         private void Awake()
         {
+
             AddGeneralSettingConfig();
             var controlOption = setting.AddOption("Control", "CONTROL");
 
             setting.Init(this);
+
         }
         private void AddGeneralSettingConfig()
         {
@@ -49,12 +65,13 @@ namespace AutoSetting
         private void Start()
         {
             setting.Render();
-             
+
             Debug.Log("initial: " + setting.GetConfigValue<string>("1"));
             setting.UpdateConfig("1", "1");
             setting.UpdateConfig("2", "1");
-           
-            
+
+
+            Onclintry();
             Debug.Log($"after modification: {setting.GetConfigValue<string>("1")}");
         }
 
@@ -62,22 +79,26 @@ namespace AutoSetting
         {
             var instance = Instantiate(PrefabSection, subOptionPanel);
             instance.GetComponent<TMP_Text>().text = section.Name;
+
         }
 
         public void OnOptionLoadTitle(SettingOption option)
         {
             var instance = Instantiate(PrefabTitle, containerOption);
             instance.GetComponentInChildren<TMP_Text>().text = option.Name;
+
+
+            tabSystem.tabButtons.Add(instance.GetComponent<Button>());
         }
-     
+
         public Transform OnSubOptionLoadPanel(SettingOption option)
         {
             var instance = Instantiate(PrefabSubOptionPanel, containerSubOptionGroup);
-
+            tabSystem.tabPanels.Add(instance);
             return instance.transform;
         }
 
-        
+
     }
 }
 
