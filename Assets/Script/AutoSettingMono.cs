@@ -29,7 +29,9 @@ namespace AutoSetting
                 tabSystem.tabButtons[i].onClick.AddListener(tabSystem.LogShow);
             }
 
-
+            tabSystem.tabButtons[0].interactable = false;
+            tabSystem.tabButtons[0].GetComponent<Image>().color = tabSystem.selectedColor;
+            tabSystem.tabPanels[0].SetActive(true);
 
         }
         private void Awake()

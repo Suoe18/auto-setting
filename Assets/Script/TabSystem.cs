@@ -10,24 +10,32 @@ public class TabSystem
     public List<GameObject> tabPanels;
     [SerializeField] public List<Button> tabButtons;
 
+    public Color selectedColor;
+    public Color deselectedColor;
+
+    private int activeTabIndex = 0;
+
     public void OnClick(int index)
     {
-        for (int i = 0; i < tabPanels.Count; i++)
-        {
-            if (i == index)
-            {
-                tabPanels[i].SetActive(true);
-            }
-            else
-            {
-                tabPanels[i].SetActive(false);
-            }
-        }
+        if (index == activeTabIndex)
+            return;
+        tabButtons[activeTabIndex].interactable = true;
+        tabButtons[activeTabIndex].GetComponent<Image>().color = deselectedColor;
+
+
+        tabButtons[index].interactable = false;
+
+        tabButtons[index].GetComponent<Image>().color = selectedColor;
+        //tabButtons[index].colors. = selectedColor;
+
+        tabPanels[activeTabIndex].SetActive(false);
+        tabPanels[index].SetActive(true);
+
+        activeTabIndex = index;
     }
 
     public void LogShow()
     {
-
         Debug.Log("show");
     }
 }
