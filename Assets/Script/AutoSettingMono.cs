@@ -19,7 +19,7 @@ namespace AutoSetting
         public GameObject PrefabSubOptionPanel;
 
 
-        private void Onclintry()
+        private void OnClickUI()
         {
 
             for (int i = 0; i < tabSystem.tabButtons.Count; i++)
@@ -39,7 +39,10 @@ namespace AutoSetting
 
             AddGeneralSettingConfig();
             var controlOption = setting.AddOption("Control", "CONTROL");
+            
+                
 
+         
             setting.Init(this);
 
         }
@@ -59,9 +62,9 @@ namespace AutoSetting
                .AddConfig("4", "Master Volume", ConfigType.SLIDER, "1")
                .AddConfig("5", "Sound FX Volume", ConfigType.SLIDER, "1")
                .AddConfig("6", "Music Volume", ConfigType.SLIDER, "1")
-               .AddConfig("7", "VSYNC", ConfigType.TEXT, "ON");
+               .AddConfig("7", "Autofire", ConfigType.TOGGLE, "false",null, e => { Debug.Log(e); });
+               
 
-            setting.UpdateSection("General", "GENERAL SETTING");
         }
 
         private void Start()
@@ -73,7 +76,7 @@ namespace AutoSetting
             setting.UpdateConfig("2", "1");
 
 
-            Onclintry();
+            OnClickUI();
             Debug.Log($"after modification: {setting.GetConfigValue<string>("1")}");
         }
 

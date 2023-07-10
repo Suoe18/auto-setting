@@ -321,6 +321,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca2289a9bba070f4e82f4b547c19daa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  configType: 2
+  configType: 3
   nameTextUI: {fileID: 6485509964721811754}
   valueTextUI: {fileID: 6485509965819727491}
