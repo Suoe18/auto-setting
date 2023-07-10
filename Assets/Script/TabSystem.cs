@@ -33,9 +33,4 @@ public class TabSystem
 
         activeTabIndex = index;
     }
-
-    public void LogShow()
-    {
-        Debug.Log("show");
-    }
 }

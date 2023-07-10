@@ -26,7 +26,6 @@ namespace AutoSetting
             {
                 int index = i; // Capture the value of 'i' for the lambda expression
                 tabSystem.tabButtons[i].onClick.AddListener(() => tabSystem.OnClick(index));
-                tabSystem.tabButtons[i].onClick.AddListener(tabSystem.LogShow);
             }
 
             tabSystem.tabButtons[0].interactable = false;
